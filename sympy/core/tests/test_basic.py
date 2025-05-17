@@ -313,3 +313,13 @@ def test_replace_exceptions():
     raises(TypeError, lambda: e.replace(b*c, c.is_real))
     raises(TypeError, lambda: e.replace(b.is_real, 1))
     raises(TypeError, lambda: e.replace(lambda d: d.is_Number, 1))
+# Test for the changes made regarding __slots__ in DefaultPrinting
+
+def test_default_printing_slots():
+    from sympy.core.basic import Basic, DefaultPrinting
+    # Check that DefaultPrinting has __slots__ defined
+    assert hasattr(DefaultPrinting, '__slots__')
+    assert DefaultPrinting.__slots__ == ()
+    # Check that a Basic instance has no __dict__ attribute
+    b = Basic()
+    assert not hasattr(b, '__dict__')
